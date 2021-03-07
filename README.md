@@ -1,11 +1,14 @@
 # FastAPI and Celery Distributed Task Queue
 Working example of a distributed task queue using FastAPI and Celery, with a RabbitMQ broker.
 
-## Usage
+## Installation
 
 ### Pull RabbitMQ image
 
 > docker pull rabbitmq
+
+
+## Usage
 
 ### Build API and Task Server images
 
