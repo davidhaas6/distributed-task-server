@@ -2,7 +2,7 @@ import os
 from celery import Celery
 
 BROKER_URI = "pyamqp://guest@rabbit//"
-BACKEND_URI = "rpc:// " # RabbitMQ backend
+BACKEND_URI = "rpc://"
 
 app = Celery(
     'celery_app',
