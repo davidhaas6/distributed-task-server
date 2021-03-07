@@ -9,6 +9,5 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Run the application:
-COPY task_queue ./task_queue/
-COPY *.py ./
-CMD ["python3", "app.py"]
+COPY app/ ./
+CMD ["python3", "main.py"]
