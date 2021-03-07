@@ -15,4 +15,4 @@ services:
     image: celery_simple:latest
     entrypoint: celery -A task_queue.worker worker -l info -c 2 --uid=nobody --gid=nogroup
 
-  #   entrypoint: celery -A tasks worker -c 2 --loglevel=info --uid=nobody --gid=nogroup
+  # TODO: create different images for FastAPI and Celery servers
