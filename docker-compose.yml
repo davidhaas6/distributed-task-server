@@ -13,6 +13,6 @@ services:
     environment: 
       - MODEL_PATH=""
     image: celery_simple:latest
-    entrypoint: celery -A celery_task_app.worker worker -l info  --uid=nobody --gid=nogroup
+    entrypoint: celery -A task_queue.worker worker -l info -c 2 --uid=nobody --gid=nogroup
 
   #   entrypoint: celery -A tasks worker -c 2 --loglevel=info --uid=nobody --gid=nogroup

@@ -5,7 +5,7 @@ import random
 MODEL_PATH = os.environ['MODEL_PATH']
 
 
-class ChurnModel:
+class PredictiveModel:
 
     """ Wrapper for loading and serving pre-trained model"""
 
@@ -24,4 +24,4 @@ class ChurnModel:
         Make batch prediction on list of preprocessed feature dicts.
         Returns class probabilities if 'return_options' is 'Prob', otherwise returns class membership predictions
         """
-        return self.model.random() * 20
+        return sum(data) + self.model.random()

@@ -33,12 +33,14 @@ class PredictTask(Task):
 @app.task(ignore_result=False,
           bind=True,  # bound task https://docs.celeryproject.org/en/latest/userguide/tasks.html#basics
           base=PredictTask, # Base task instance -- reference for self
-          path=('celery_task_app.ml.model', 'ChurnModel'),  # pass task instance to model
-          name='{}.{}'.format(__name__, 'Churn')) # name for the task
-def predict_churn_single(self, data):
+          path=('task_queue.ml.model', 'PredictiveModel'),  # pass task instance to model
+          name='{}.{}'.format(__name__, 'PredictionTask')) # name for the task
+def predict_objective(self, data):
     """
     Essentially the run method of PredictTask
     """
-    prediction = self.model.predict([data])
-    logging.info(f'Prediction: {prediction:.4}')
+    logging.info(data)
+    inputs = data['features']
+    prediction = self.model.predict(inputs) # a simple sum for this example
+    logging.info(f'Prediction: {prediction}')
     return prediction

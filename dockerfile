@@ -9,6 +9,6 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Run the application:
-COPY celery_task_app ./celery_task_app/
+COPY task_queue ./task_queue/
 COPY *.py ./
 CMD ["python3", "app.py"]

@@ -2,3 +2,4 @@ celery
 fastapi
 uvicorn
 joblib
+pydantic
