@@ -23,17 +23,17 @@ class PredictTask(Task):
         """
         if not self.model:
             logging.info('Loading Model...')
-            module_import = importlib.import_module(self.path[0]) # import the model from @app.task param
-            model_obj = getattr(module_import, self.path[1]) # equivalent to doing ModelPath.ModelClass
-            self.model = model_obj() # Creating instance of ModelClass()
+            module_import = importlib.import_module(self.path[0])  # import model specified in @app.task's <path> paramater
+            model_obj = getattr(module_import, self.path[1])  # Equivalent to doing ModelPath.ModelClass
+            self.model = model_obj()  # Creating instance of ModelClass()
             logging.info('Model loaded')
         return self.run(*args, **kwargs)
 
-
+# Docs: https://docs.celeryproject.org/en/latest/userguide/tasks.html#basics
 @app.task(ignore_result=False,
-          bind=True,  # bound task https://docs.celeryproject.org/en/latest/userguide/tasks.html#basics
-          base=PredictTask, # Base task instance -- reference for self
-          path=('task_queue.ml.model', 'PredictiveModel'),  # pass task instance to model
+          bind=True,  # bound task 
+          base=PredictTask, # Base task instance -- reference for self. This is how you get the model
+          path=('task_queue.ml.model', 'PredictiveModel'),  # pass the path for the model's class to PredictTask
           name='{}.{}'.format(__name__, 'PredictionTask')) # name for the task
 def predict_objective(self, data):
     """

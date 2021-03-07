@@ -3,7 +3,7 @@ Working example of a distributed task queue using FastAPI and Celery, with a Rab
 
 ## Usage
 
-### Build Worker and FastAPI images
+### Build API and Task Server images
 
 > docker build -t celery_simple:latest .
 

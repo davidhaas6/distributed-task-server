@@ -1,9 +1,10 @@
+# The main entrypoint for the API
 
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from celery.result import AsyncResult
 
-from models import ModelInput, Task, Prediction
+from data_models import ModelInput, Task, Prediction
 from task_queue.tasks import predict_objective
 
 
@@ -23,10 +24,12 @@ async def model_predict(data: ModelInput):
          responses={202: {'model': Task, 'description': 'Accepted: Not Ready'}})
 async def model_result(task_id):
     """Fetch result for given task_id"""
-    task = AsyncResult(task_id)
+    task = AsyncResult(task_id)  # Check progrses of task with backend (RabbitMQ in our case)
     if not task.ready():
         print(app.url_path_for('model_predict'))
         return JSONResponse(status_code=202, content={'task_id': str(task_id), 'status': 'Processing'})
+    
+    # Task is ready, return result
     result = task.get()
     return {'task_id': task_id, 'status': 'Success', 'probability': str(result)}
 
