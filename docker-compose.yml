@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   rabbit:
-    image: rabbitmq:latest
+    image: rabbitmq:latest  #TODO specify hostname
 
   fastapi:
     image: celery_simple:latest
@@ -10,5 +10,9 @@ services:
     entrypoint: uvicorn app:app --host 0.0.0.0 --port 8080 
 
   worker:
+    environment: 
+      - MODEL_PATH=""
     image: celery_simple:latest
-    entrypoint: celery -A tasks worker -c 2 --loglevel=info --uid=nobody --gid=nogroup
+    entrypoint: celery -A celery_task_app.worker worker -l info  --uid=nobody --gid=nogroup
+
+  #   entrypoint: celery -A tasks worker -c 2 --loglevel=info --uid=nobody --gid=nogroup
