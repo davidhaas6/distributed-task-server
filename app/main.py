@@ -3,20 +3,31 @@
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
 from celery.result import AsyncResult
-
+from celery import Celery
 from data_models import ModelInput, Task, Prediction
-from task_queue.tasks import predict_objective
+import os
 
+from celery import Celery
+
+BROKER_URI = os.environ['BROKER_URI']
+BACKEND_URI = os.environ['BACKEND_URI']
 
 # Create the FastAPI app
 app = FastAPI()
+
+# Create celery instance
+celery_app = Celery(
+    'celery_client',
+    broker=BROKER_URI,
+    backend=BACKEND_URI,
+)
 
 
 @app.post('/model/predict', response_model=Task, status_code=202)
 async def model_predict(data: ModelInput):
     """Create celery prediction task. Return task_id to client in order to retrieve result"""
-    task_id = predict_objective.delay(dict(data))
-    # print(task_id)
+    task_name='task_queue.tasks.PredictionTask'
+    task_id = celery_app.send_task(task_name,args=[dict(data)],kwargs={})
     return {'task_id': str(task_id), 'status': 'Processing'}
 
 
