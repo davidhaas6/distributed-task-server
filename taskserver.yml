@@ -6,8 +6,8 @@ services:
     image: rabbitmq:latest
     ports:
       - "5672:5672"
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
+      - "15672:15672"
+
 
   worker:
     image: task_server:latest
