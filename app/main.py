@@ -1,13 +1,16 @@
 # The main entrypoint for the API
+import os
 
 from fastapi import FastAPI
 from fastapi.responses import JSONResponse
+from starlette.responses import RedirectResponse
+
 from celery.result import AsyncResult
 from celery import Celery
-from data_models import ModelInput, Task, Prediction
-import os
 
-from celery import Celery
+from data_models import ModelInput, Task, Prediction
+
+
 
 BROKER_URI = os.environ['BROKER_URI']
 BACKEND_URI = os.environ['BACKEND_URI']
@@ -23,6 +26,11 @@ celery_app = Celery(
     backend=BACKEND_URI,
 )
 print("Loaded app:", celery_app)
+
+
+@app.get("/")
+def index():
+    return RedirectResponse(url="/docs")
 
 
 @app.post('/model/predict', response_model=Task, status_code=202)
