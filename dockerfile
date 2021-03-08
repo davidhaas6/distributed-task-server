@@ -8,6 +8,12 @@ ENV PATH="$VIRTUAL_ENV/bin:$PATH"
 COPY requirements.txt .
 RUN pip install -r requirements.txt
 
+# Configure app
+ENV BROKER_URI="pyamqp://guest@rabbit//"
+ENV BACKEND_URI="rpc://"
+ENV MODEL_PATH=""
+
 # Run the application:
 COPY app/ ./
+COPY task_queue ./task_queue/
 CMD ["python3", "main.py"]

@@ -1,3 +1,3 @@
 # builds and runs the servers
-docker build -t celery_simple:latest .
+docker build -t task_server:latest .
 docker-compose up
