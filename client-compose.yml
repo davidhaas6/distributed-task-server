@@ -1,6 +1,6 @@
+# Spins up just the client
 version: "3.3"
 services:
-
   fastapi:
     image: task_server:latest
     ports:
