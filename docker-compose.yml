@@ -2,6 +2,8 @@ version: "3.3"
 services:
   rabbit:
     image: rabbitmq:latest  #TODO specify hostname
+    ports:
+      - "5672:5672"
 
   fastapi:
     image: task_server:latest
