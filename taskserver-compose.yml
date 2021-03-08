@@ -1,13 +1,11 @@
 # Spins up the Broker and Task Server, for VM deployment
 version: "3.3"
 services:
-
   rabbit:
     image: rabbitmq:latest
     ports:
       - "5672:5672"
       - "15672:15672"
-
 
   worker:
     image: task_server:latest

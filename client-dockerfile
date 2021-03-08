@@ -9,10 +9,11 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Configure app
+# ENV BROKER_URI="pyamqp://guest@rabbit//"
+# ENV BACKEND_URI="rpc://"
 ENV BROKER_URI="pyamqp://guest@34.122.90.93:5672//"
 ENV BACKEND_URI="rpc://34.122.90.93"
 
 # Run the application:
 COPY app/ ./
-COPY task_queue ./task_queue/
 CMD ["python3", "main.py"]

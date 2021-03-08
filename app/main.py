@@ -16,12 +16,13 @@ BACKEND_URI = os.environ['BACKEND_URI']
 app = FastAPI()
 
 # Create celery instance
+# NOTE: If it seems like the app is hanging on this, visit the /docs page before anything then try the request
 celery_app = Celery(
     'celery_client',
     broker=BROKER_URI,
     backend=BACKEND_URI,
 )
-print("celery initialized:", celery_app)
+print("Loaded app:", celery_app)
 
 
 @app.post('/model/predict', response_model=Task, status_code=202)
