@@ -1,18 +1,18 @@
+
 version: "3.3"
 services:
-  rabbit:
-    image: rabbitmq:latest  #TODO specify hostname
-    ports:
-      - "5672:5672"
 
-  fastapi:
-    image: task_server:latest
+  rabbit:
+    image: rabbitmq:latest
     ports:
-      - 8080:8080
-    entrypoint: uvicorn main:app --host 0.0.0.0 --port 8080 
+      - "127.0.0.1:5672:5672"
+    network_mode: "host"
 
   worker:
     image: task_server:latest
     entrypoint: celery -A task_queue.worker worker -l info -c 2 --uid=nobody --gid=nogroup
+    ports:
+      - "127.0.0.1:8000:8000"
+    network_mode: "host"
 
   # TODO: create different images for FastAPI and Celery servers
