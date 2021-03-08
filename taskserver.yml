@@ -5,14 +5,15 @@ services:
   rabbit:
     image: rabbitmq:latest
     ports:
-      - "127.0.0.1:5672:5672"
-    network_mode: "host"
+      - "5672:5672"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   worker:
     image: task_server:latest
     entrypoint: celery -A task_queue.worker worker -l info -c 2 --uid=nobody --gid=nogroup
     ports:
-      - "127.0.0.1:8000:8000"
+      - "8000:8000"
     network_mode: "host"
 
   # TODO: create different images for FastAPI and Celery servers
