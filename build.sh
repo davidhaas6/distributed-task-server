@@ -1,3 +1,4 @@
+#!/bin/bash
 # builds and runs the servers
 
 if [[ $1 == "client" ]]; then
