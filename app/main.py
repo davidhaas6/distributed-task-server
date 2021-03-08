@@ -21,13 +21,16 @@ celery_app = Celery(
     broker=BROKER_URI,
     backend=BACKEND_URI,
 )
+print("celery initialized:", celery_app)
 
 
 @app.post('/model/predict', response_model=Task, status_code=202)
 async def model_predict(data: ModelInput):
     """Create celery prediction task. Return task_id to client in order to retrieve result"""
     task_name='task_queue.tasks.PredictionTask'
+    print("sending task")
     task_id = celery_app.send_task(task_name,args=[dict(data)],kwargs={})
+    print("sent")
     return {'task_id': str(task_id), 'status': 'Processing'}
 
 

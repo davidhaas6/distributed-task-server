@@ -14,6 +14,5 @@ services:
     entrypoint: celery -A task_queue.worker worker -l info -c 2 --uid=nobody --gid=nogroup
     ports:
       - "8000:8000"
-    network_mode: "host"
 
   # TODO: create different images for FastAPI and Celery servers
