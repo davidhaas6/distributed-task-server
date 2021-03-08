@@ -9,12 +9,9 @@ COPY requirements.txt .
 RUN pip install -r requirements.txt
 
 # Configure app
-# ENV BROKER_URI="pyamqp://guest@rabbit//"
-# ENV BACKEND_URI="rpc://"
-# ENV BROKER_URI="pyamqp://guest:34.122.90.93@rabbit:5672//"
-ENV BROKER_URI="pyamqp://guest:**@34.122.90.93:5672//"
-ENV BACKEND_URI=""
-# ENV MODEL_PATH=""
+ENV BROKER_URI="pyamqp://guest@rabbit//"
+ENV BACKEND_URI="rpc://"
+ENV MODEL_PATH=""
 
 # Run the application:
 COPY app/ ./
