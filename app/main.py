@@ -37,9 +37,7 @@ def index():
 async def model_predict(data: ModelInput):
     """Create celery prediction task. Return task_id to client in order to retrieve result"""
     task_name='task_queue.tasks.PredictionTask'
-    print("sending task")
     task_id = celery_app.send_task(task_name,args=[dict(data)],kwargs={})
-    print("sent")
     return {'task_id': str(task_id), 'status': 'Processing'}
 
 
@@ -47,9 +45,9 @@ async def model_predict(data: ModelInput):
          responses={202: {'model': Task, 'description': 'Accepted: Not Ready'}})
 async def model_result(task_id):
     """Fetch result for given task_id"""
+
     task = AsyncResult(task_id)  # Check progrses of task with backend (RabbitMQ in our case)
     if not task.ready():
-        print(app.url_path_for('model_predict'))
         return JSONResponse(status_code=202, content={'task_id': str(task_id), 'status': 'Processing'})
     
     # Task is ready, return result
