@@ -1,8 +1,8 @@
+# Spins up just the client
 version: "3.3"
 services:
-
   fastapi:
-    image: task_server:latest
+    image: api_client:latest
     ports:
       - 8080:8080
     entrypoint: uvicorn main:app --host 0.0.0.0 --port 8080 

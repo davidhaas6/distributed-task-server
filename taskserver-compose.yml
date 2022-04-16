@@ -1,18 +1,14 @@
-
+# Spins up the Broker and Task Server, for VM deployment
 version: "3.3"
 services:
-
   rabbit:
     image: rabbitmq:latest
     ports:
       - "5672:5672"
       - "15672:15672"
 
-
   worker:
     image: task_server:latest
     entrypoint: celery -A task_queue.worker worker -l info -c 2 --uid=nobody --gid=nogroup
     ports:
       - "8000:8000"
-
-  # TODO: create different images for FastAPI and Celery servers

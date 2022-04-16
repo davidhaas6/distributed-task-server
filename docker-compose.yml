@@ -1,3 +1,5 @@
+# Spins up all three servers for a local development environment
+
 version: "3.3"
 services:
   rabbit:
@@ -6,7 +8,7 @@ services:
       - "5672:5672"
 
   fastapi:
-    image: task_server:latest
+    image: api_client:latest
     ports:
       - 8080:8080
     entrypoint: uvicorn main:app --host 0.0.0.0 --port 8080 

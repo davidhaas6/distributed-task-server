@@ -1,0 +1,20 @@
+FROM python:3.8-slim-buster
+
+ENV VIRTUAL_ENV=./venv/
+RUN python3 -m venv $VIRTUAL_ENV
+ENV PATH="$VIRTUAL_ENV/bin:$PATH"
+
+# Install dependencies:
+COPY requirements.txt .
+RUN pip install -r requirements.txt
+
+# Configure app
+# ENV MODEL_PATH=""
+# ENV BROKER_URI="pyamqp://guest@rabbit//"
+# ENV BACKEND_URI="rpc://"
+ENV BROKER_URI="pyamqp://guest@34.122.90.93:5672//"
+ENV BACKEND_URI="rpc://34.122.90.93"
+
+# Run the application:
+COPY app/ ./
+CMD ["python3", "main.py"]
